@@ -54,6 +54,22 @@ public class PhoneNumberChecker {
 
 		return validNumber;
 	}
+	
+	public static void printResults(ValidNumber validNumber) {
+		if (validNumber == null) {
+			System.out.println("Phone number is too long or short.");
+		}
+		else if (!validNumber.isValid())
+			System.out.println("Number is not valid");
+		else {
+			if (validNumber.getCountry() == Country.UK) {
+				System.out.println("Valid number in the UK in the area code for " + validNumber.getUkAreaCode() + " is: " + validNumber.getPhoneNumber());
+			}
+			if (validNumber.getCountry() == Country.US) {
+				System.out.println("Valid number in the US in the area code for " + validNumber.getUsAreaCode() + " is: " + validNumber.getPhoneNumber());
+			}
+		}
+	}
 
 	private static boolean checkAreaCode(ValidNumber number) {
 		int areaCode = getNumberAt(2, 5, number.getPhoneNumber());
@@ -109,90 +125,4 @@ public class PhoneNumberChecker {
 		return number;
 	}
 
-}
-
-class ValidNumber {
-	private String phoneNumber;
-	private Country country;
-	private UkAreaCode ukAreaCode;
-	private UsAreaCode usAreaCode;
-	private boolean valid;
-
-	public ValidNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	/**
-	 * @return the phoneNumber
-	 */
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	/**
-	 * @param phoneNumber
-	 *            the phoneNumber to set
-	 */
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	/**
-	 * @return the country
-	 */
-	public Country getCountry() {
-		return country;
-	}
-
-	/**
-	 * @param country
-	 *            the country to set
-	 */
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
-	/**
-	 * @return the ukAreaCode
-	 */
-	public UkAreaCode getUkAreaCode() {
-		return ukAreaCode;
-	}
-
-	/**
-	 * @param ukAreaCode
-	 *            the ukAreaCode to set
-	 */
-	public void setUkAreaCode(UkAreaCode ukAreaCode) {
-		this.ukAreaCode = ukAreaCode;
-	}
-
-	/**
-	 * @return the usAreaCode
-	 */
-	public UsAreaCode getUsAreaCode() {
-		return usAreaCode;
-	}
-
-	/**
-	 * @param usAreaCode
-	 *            the usAreaCode to set
-	 */
-	public void setUsAreaCode(UsAreaCode usAreaCode) {
-		this.usAreaCode = usAreaCode;
-	}
-
-	/**
-	 * @return the valid
-	 */
-	public boolean isValid() {
-		return valid;
-	}
-
-	/**
-	 * @param valid the valid to set
-	 */
-	public void setValid(boolean valid) {
-		this.valid = valid;
-	}
 }

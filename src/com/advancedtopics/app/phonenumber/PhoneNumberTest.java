@@ -1,6 +1,10 @@
 package com.advancedtopics.app.phonenumber;
 
-import com.advancedtopics.app.phonenumber.PhoneNumberChecker.Country;
+import org.opt4j.core.Objectives;
+
+import com.advancedtopics.app.phonenumber.opt4j.PhoneNumberCreator;
+import com.advancedtopics.app.phonenumber.opt4j.PhoneNumberDecoder;
+import com.advancedtopics.app.phonenumber.opt4j.PhoneNumberEvaluator;
 
 /**
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 13, 2015
@@ -10,19 +14,23 @@ public class PhoneNumberTest {
 
 	public static void main(String[] args) {
 		ValidNumber validNumber = PhoneNumberChecker.checkPhoneNumber("01 333 444 5555");
-		if (validNumber == null) {
-			System.out.println("Phone number is too long or short.");
+		PhoneNumberChecker.printResults(validNumber);
+		
+		evaluatePhoneNumber();
+	}
+	
+	private static void evaluatePhoneNumber() {
+		StringBuilder builder = new StringBuilder();
+		for (int x = 0; x < 100; x++) {
+			PhoneNumberCreator creator = new PhoneNumberCreator(100);
+			PhoneNumberDecoder decoder = new PhoneNumberDecoder();
+			PhoneNumberEvaluator evaluator = new PhoneNumberEvaluator();
+
+			Objectives objectives = evaluator.evaluate(decoder.decode(creator.create()));
+			System.out.println(objectives.toString());
+//			builder.append("\n" + objectives.toString());
 		}
-		else if (!validNumber.isValid())
-			System.out.println("Number is not valid");
-		else {
-			if (validNumber.getCountry() == Country.UK) {
-				System.out.println("Valid number in the UK in the area code for " + validNumber.getUkAreaCode() + " is: " + validNumber.getPhoneNumber());
-			}
-			if (validNumber.getCountry() == Country.US) {
-				System.out.println("Valid number in the US in the area code for " + validNumber.getUsAreaCode() + " is: " + validNumber.getPhoneNumber());
-			}
-		}
+		System.out.println(builder.toString());
 	}
 	
 }
