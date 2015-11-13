@@ -1,15 +1,16 @@
 package com.advancedtopics.app.opt4j;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.problem.Evaluator;
 
 import com.advancedtopics.app.QuadHolder;
 import com.advancedtopics.app.QuadraticRoots;
+import com.advancedtopics.app.Target;
 import com.google.inject.Inject;
 
 public class QuadEvaluator implements Evaluator<List<QuadHolder>> {
@@ -23,66 +24,119 @@ public class QuadEvaluator implements Evaluator<List<QuadHolder>> {
 		quadRoots = new QuadraticRoots();
 	}
 
+	public static Map<String, Target> TARGETS;
+	private Map<String, QuadHolder> quadHit;
+	private List<String> targetNames;
+
+	private void createTargets() {
+		TARGETS = new HashMap<String, Target>();
+		quadHit = new HashMap<String, QuadHolder>();
+		targetNames = new ArrayList<String>();
+		targetNames.add("disriminantLessThan0");
+		targetNames.add("bLessThan0");
+		targetNames.add("other");
+
+		for (String targetName : targetNames) {
+			Target target = new Target(targetName);
+			TARGETS.put(targetName, target);
+		}
+	}
+
+	private void resetTargets() {
+		for (String targetName : targetNames) {
+			TARGETS.get(targetName).reset();
+		}
+	}
+
+	private void calculateFitness() {
+		for (String targetName : targetNames) {
+			Target target = TARGETS.get(targetName);
+			double branchDistance = target.getBranchDistance();
+			double approachDistance = target.getApproachDistance();
+			double normalisedBranchDistance = 1 - Math.pow(1.001, (branchDistance * -1));
+			double fitness = approachDistance + normalisedBranchDistance;
+			target.setFitness(fitness);
+		}
+	}
+
+	private void findHitTarget(QuadHolder quadHolder) {
+		for (String targetName : targetNames) {
+			Target target = TARGETS.get(targetName);
+			if (target.isTargetHit())
+				quadHit.put(targetName, quadHolder);
+		}
+	}
+
+	private void printTargets() {
+		for (String targetName : targetNames) {
+			Target target = TARGETS.get(targetName);
+			System.out.println(target.toString() + " Fitness: " + target.getFitness());
+			System.out.println("Target Hit? " + target.isTargetHit());
+		}
+	}
+
+	private void printTargetsHit() {
+		for (String targetName : targetNames) {
+			if (TARGETS.get(targetName).isTargetHit()) {
+				QuadHolder quad = quadHit.get(targetName);
+				System.out.println("**********");
+				System.out.println("Quadratic Equition: " + quad + " was hit by target: " + targetName);
+				System.out.println("**********");
+			}
+		}
+	}
+
 	@Override
 	public Objectives evaluate(List<QuadHolder> phenotype) {
 		Objectives objectives = new Objectives();
-		List<QuadHolder> results = new ArrayList<QuadHolder>();
-		
-		double fitnessD = 0, fitnessB = 0, fitnessO = 0;
+
+		createTargets();
+
 		for (QuadHolder holder : phenotype) {
-			Map<String, Object> map = quadRoots.findQuadraticRoots(holder);
-			String target = map.get("target").toString();
-			
-//			double branchDistanceD = calculateBranchDistanceForDiscriminantLessThan0(target, holder);
-//			double approachLevelD = calculateApproachLevelForDiscriminantLessThan0();
-//			fitnessD = calculateFitnessFunction(approachLevelD, branchDistanceD);
-//			System.out.println("Fitness D: " + fitnessD);
-//			if (fitnessD == 0) {
-//				results.add(holder);
-//			}
-			
-//			double branchDistanceB = calculateBranchDistanceForBLessThan0(target, holder);
-//			double approachLevelB = calculateApproachLevelForBLessThan0(target);
-//			fitnessB = calculateFitnessFunction(approachLevelB, branchDistanceB);
-//			System.out.println("Fitness B: " + fitnessB);
-//			if (fitnessB == 0) {
-//				results.add(holder);
-//			}
-//			
-			double branchDistanceO = calculateBranchDistanceForOther(target, holder);
-			double approachLevelO = calculateApproachLevelForOther(target);
-			fitnessO = calculateFitnessFunction(approachLevelO, branchDistanceO);
-			System.out.println("Fitness O: " + fitnessO);
-			if (fitnessO == 0) {
-				results.add(holder);
-			}
+			// System.out.println("***** " + holder + " *****");
+
+			resetTargets();
+			quadRoots.findQuadraticRoots(holder);
+
+			calculateFitness();
+			// printTargets();
+			findHitTarget(holder);
+			printTargetsHit();
 		}
 
-//		objectives.add("Same X Values", Sign.MIN, sameX);
-//		objectives.add("Different X Values", Sign.MIN, differentX);
-//		objectives.add("Discriminant Less Than 0", Sign.MIN, discriminantLessThan0);
-//		objectives.add("B Less Than 0", Sign.MIN, bLessThan0);
-//		objectives.add("Other", Sign.MIN, other);
-		
-		objectives.add("discriminantLessThan0", Sign.MIN, fitnessD);
-		objectives.add("bLessThan0", Sign.MIN, fitnessB);
-		objectives.add("Other", Sign.MIN, fitnessO);
+		// System.out.println("\n********** Number of Quadratric Equations Ran: [" + phenotype.size() + "] **********");
+		// System.out.println("\n********** Target - Discriminant Less Than 0: [" + targetD.size() + "] **********");
+		// for (QuadHolder holder : targetD)
+		// System.out.println(holder);
+		// System.out.println("\n********** Target - B Less Than 0: [" + targetB.size() + "] **********");
+		// for (QuadHolder holder : targetB)
+		// System.out.println(holder);
+		// System.out.println("\n********** Target - Other: [" + targetO.size() + "] **********");
+		// for (QuadHolder holder : targetO)
+		// System.out.println(holder);
 
+//		objectives.add("Target D", Sign.MAX, fitD);
+//		objectives.add("Discriminant", Sign.MIN, dis);
+//		objectives.add("Target B", Sign.MAX, fitB);
+//		objectives.add("B", Sign.MIN, b);
+//		objectives.add("Target O", Sign.MAX, fitO);
+//		objectives.add("O", Sign.MIN, o);
 		return objectives;
 	}
-	
+
 	private double calculateFitnessFunction(double approachLevel, double branchDistance) {
 		double normalisedBranchDistance = 1 - Math.pow(1.001, (branchDistance * -1));
 		double fitness = approachLevel + normalisedBranchDistance;
 		return fitness;
 	}
 
-	private double calculateBranchDistanceForDiscriminantLessThan0(String target,  QuadHolder holder) {
+	private double calculateBranchDistanceForDiscriminantLessThan0(String target, QuadHolder holder) {
 		double branchDistance = 0;
 		if (!target.equals("discriminantLessThan0")) {
 			double discriminant = QuadraticRoots.findDiscriminant(holder.getA(), holder.getB(), holder.getC());
 			branchDistance = calculateBranchDistance(discriminant, 0);
 		}
+		System.out.println(branchDistance);
 		return branchDistance;
 	}
 

@@ -9,6 +9,11 @@ import com.advancedtopics.app.opt4j.QuadEvaluator;
 public class QuadTest {
 
 	public static void main(String[] args) {
+		evaluateQuadriticEquations();
+	}
+
+	private static void evaluateQuadriticEquations() {
+		StringBuilder builder = new StringBuilder();
 		for (int x = 0; x < 100; x++) {
 			QuadCreator creator = new QuadCreator(100);
 			QuadDecoder decoder = new QuadDecoder();
@@ -16,7 +21,9 @@ public class QuadTest {
 
 			Objectives objectives = evaluator.evaluate(decoder.decode(creator.create()));
 			System.out.println(objectives.toString());
+			builder.append("\n" + objectives.toString());
 		}
+		System.out.println(builder.toString());
 	}
 
 }
