@@ -4,7 +4,7 @@ package com.advancedtopics.app;
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 11, 2015
  *
  */
-public class Condition {
+public class Condition implements ICondition {
 
 	private static int PENALTY = 4;
 
@@ -21,27 +21,27 @@ public class Condition {
 	private Operator operator;
 	private double a;
 	private double b;
+	private int percentage;
 	private boolean passed;
 
 	public Condition() {
 	}
 
-	/**
-	 * @param conditionType
-	 * @param operator
-	 * @param a
-	 * @param b
-	 * @param passed
-	 */
-	public Condition(ConditionType conditionType, Operator operator, double a, double b, boolean passed) {
+	public Condition(Operator operator, double a, double b, boolean passed) {
 		this();
-		this.conditionType = conditionType;
+		this.conditionType = ConditionType.NUMERIC;
 		this.operator = operator;
 		this.a = a;
 		this.b = b;
 		this.passed = passed;
 	}
 	
+	public Condition(int percentage, boolean passed) {
+		this();
+		this.percentage = percentage;
+		this.passed = passed;
+	}
+
 	public Condition(Condition condition, boolean switchCondition) {
 		Operator operator;
 		if (switchCondition)
@@ -57,21 +57,21 @@ public class Condition {
 		else
 			this.passed = condition.passed;
 	}
-	
+
 	private Operator switchCondition(Operator operatorType) {
 		switch (operatorType) {
 		case EQUALS:
 			return Operator.NOT_EQUALS;
 		case LESS_THAN:
-			return  Operator.GREATER_THAN;
+			return Operator.GREATER_THAN;
 		case GREATER_THAN_OR_EQUAL:
-			return  Operator.LESS_THAN_OR_EQUAL;
+			return Operator.LESS_THAN_OR_EQUAL;
 		case GREATER_THAN:
-			return  Operator.LESS_THAN;
+			return Operator.LESS_THAN;
 		case LESS_THAN_OR_EQUAL:
 			return Operator.GREATER_THAN_OR_EQUAL;
 		case NOT_EQUALS:
-			return  Operator.EQUALS;
+			return Operator.EQUALS;
 		default:
 			return null;
 		}
@@ -126,11 +126,19 @@ public class Condition {
 		}
 		return 0;
 	}
-	
+
+	/**
+	 * Calculate the branch distance for a true or false condition. The percentage is determined by the odds of the
+	 * condition being true, for example if comparing an enum with 3 values, the odds of the desired enum being hit are
+	 * 33%.
+	 * 
+	 * @param percentage The odds of the condition being true.
+	 * @return The branch distance for this condition.
+	 */
 	private double calculateTrueFalse() {
-		return .5 + PENALTY;
+		return percentage + PENALTY;
 	}
-	
+
 	/**
 	 * @return the name
 	 */

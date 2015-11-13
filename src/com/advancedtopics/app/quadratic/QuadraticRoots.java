@@ -2,9 +2,8 @@ package com.advancedtopics.app.quadratic;
 
 import com.advancedtopics.app.Complex;
 import com.advancedtopics.app.Condition;
-import com.advancedtopics.app.JoinedCondition;
-import com.advancedtopics.app.Condition.ConditionType;
 import com.advancedtopics.app.Condition.Operator;
+import com.advancedtopics.app.JoinedCondition;
 import com.advancedtopics.app.quadratic.opt4j.QuadEvaluator;
 
 public class QuadraticRoots {
@@ -19,18 +18,18 @@ public class QuadraticRoots {
 		double d = b * b - 4.0 * a * c; // discriminant
 		double aa = a + a;
 
-		Condition discCond = new Condition(ConditionType.NUMERIC, Operator.LESS_THAN, d, 0.0, d < 0.0);
+		Condition discCond = new Condition(Operator.LESS_THAN, d, 0.0, d < 0.0);
 		QuadEvaluator.TARGETS.get("disriminantLessThan0").addCondition(discCond);
 
-		Condition bCond1 = new Condition(ConditionType.NUMERIC, Operator.LESS_THAN, b, 0.0, b < 0.0);
+		Condition bCond1 = new Condition(Operator.LESS_THAN, b, 0.0, b < 0.0);
 		Condition bCond2 = new Condition(discCond, true);
 		JoinedCondition bJoinCond = new JoinedCondition(bCond1, bCond2);
-		QuadEvaluator.TARGETS.get("bLessThan0").addJoinedCondition(bJoinCond);
+		QuadEvaluator.TARGETS.get("bLessThan0").addCondition(bJoinCond);
 
 		Condition oCond1 = new Condition(discCond, true);
 		Condition oCond2 = new Condition(bCond1, true);
 		JoinedCondition jc = new JoinedCondition(oCond1, oCond2);
-		QuadEvaluator.TARGETS.get("other").addJoinedCondition(jc);
+		QuadEvaluator.TARGETS.get("other").addCondition(jc);
 
 		if (d < 0.0) {
 			double re = -b / aa;

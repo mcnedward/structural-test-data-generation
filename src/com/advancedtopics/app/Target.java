@@ -10,15 +10,13 @@ import java.util.List;
 public class Target {
 
 	private String targetName;
-	private List<Condition> conditions;
-	private List<JoinedCondition> joinedConditions;
+	private List<ICondition> conditions;
 	private boolean targetHit;
 	private int approachDistance;
 	private double fitness;
 
 	public Target() {
-		conditions = new ArrayList<Condition>();
-		joinedConditions = new ArrayList<JoinedCondition>();
+		conditions = new ArrayList<ICondition>();
 		targetHit = false;
 		approachDistance = 0;
 	}
@@ -44,32 +42,24 @@ public class Target {
 	public double getBranchDistance() {
 		double branchDistance = 0;
 
-		for (Condition condition : conditions) {
+		for (ICondition condition : conditions) {
 			branchDistance += condition.calculateBranchDistance();
-		}
-		for (JoinedCondition joinedCondition : joinedConditions) {
-			branchDistance += joinedCondition.calculateBranchDistance();
 		}
 
 		return branchDistance;
 	}
 
 	public void reset() {
-		conditions = new ArrayList<Condition>();
-		joinedConditions = new ArrayList<JoinedCondition>();
+		conditions = new ArrayList<ICondition>();
 		targetHit = false;
 	}
 	
-	public List<Condition> getConditions() {
+	public List<ICondition> getConditions() {
 		return conditions;
 	}
 
-	public void addCondition(Condition condition) {
+	public void addCondition(ICondition condition) {
 		conditions.add(condition);
-	}
-
-	public void addJoinedCondition(JoinedCondition joinedCondition) {
-		joinedConditions.add(joinedCondition);
 	}
 
 	/**

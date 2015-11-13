@@ -14,6 +14,7 @@ public class ValidNumber {
 	private UkAreaCode ukAreaCode;
 	private UsAreaCode usAreaCode;
 	private boolean valid;
+	private String invalidReason;
 
 	public ValidNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
@@ -92,5 +93,24 @@ public class ValidNumber {
 	 */
 	public void setValid(boolean valid) {
 		this.valid = valid;
+	}
+	
+	/**
+	 * @return the invalidReason
+	 */
+	public String getInvalidReason() {
+		return invalidReason;
+	}
+
+	/**
+	 * @param invalidReason the invalidReason to set
+	 */
+	public void setInvalidReason(String invalidReason) {
+		this.invalidReason = invalidReason;
+	}
+
+	@Override
+	public String toString() {
+		return "Number: [" + phoneNumber + "] is valid? [" + valid + "]" + (!valid ? " Reason: " + invalidReason : "");
 	}
 }

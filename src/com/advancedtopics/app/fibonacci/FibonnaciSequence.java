@@ -1,7 +1,6 @@
 package com.advancedtopics.app.fibonacci;
 
 import com.advancedtopics.app.Condition;
-import com.advancedtopics.app.Condition.ConditionType;
 import com.advancedtopics.app.Condition.Operator;
 import com.advancedtopics.app.JoinedCondition;
 import com.advancedtopics.app.fibonacci.opt4j.FibonnaciEvaluator;
@@ -15,7 +14,7 @@ public class FibonnaciSequence {
 	 * O(log(n))
 	 */
 	public static long fib(long n) {
-		Condition nCond = new Condition(ConditionType.NUMERIC, Operator.LESS_THAN_OR_EQUAL, n, 0, n <= 0);
+		Condition nCond = new Condition(Operator.LESS_THAN_OR_EQUAL, n, 0, n <= 0);
 		FibonnaciEvaluator.TARGETS.get("nLessThanOr0").addCondition(nCond);
 		
 		if (n <= 0) {
@@ -26,10 +25,10 @@ public class FibonnaciSequence {
 		long i = (int) (n - 1);
 		long a = 1, b = 0, c = 0, d = 1, tmp1, tmp2;
 
-		Condition iCond= new Condition(ConditionType.NUMERIC, Operator.NOT_EQUALS, i % 2, 0, i % 2 != 0);
+		Condition iCond= new Condition(Operator.NOT_EQUALS, i % 2, 0, i % 2 != 0);
 		Condition iCond2 = new Condition(nCond, true);
 		JoinedCondition joined = new JoinedCondition(iCond, iCond2);
-		FibonnaciEvaluator.TARGETS.get("iMod2Not0").addJoinedCondition(joined);
+		FibonnaciEvaluator.TARGETS.get("iMod2Not0").addCondition(joined);
 		
 		while (i > 0) {
 			if (i % 2 != 0) {
