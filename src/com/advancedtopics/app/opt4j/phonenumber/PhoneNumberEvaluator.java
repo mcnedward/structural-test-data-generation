@@ -21,14 +21,14 @@ public class PhoneNumberEvaluator extends BaseEvaluator<String> {
 		PhoneNumber phoneNumber = PhoneNumberChecker.checkPhoneNumber(phenotype);
 
 		calculateFitness();
-		setTargetGroups();
+		updateResults(phoneNumber, phenotype);
 		setPhoneNumberForTargetsHit(phoneNumber);
 
 		return targetGroups;
 	}
 
 	@Override
-	protected void setTargetNames() {
+	protected void setup() {
 		targetNames.add("ukCountryCode");
 		targetNames.add("usCountryCode");
 		targetNames.add("noCountryCode");
@@ -50,53 +50,53 @@ public class PhoneNumberEvaluator extends BaseEvaluator<String> {
 	 */
 
 	@Override
-	protected void setTargetGroups() {
+	protected void updateResults(Object testObject, Object phenotype) {
 		// Everything passed for area code 1
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("ukForAreaCode1"),
+		createTargetGroup("Everything Passed for UK", testObject, phenotype, TARGETS.get("ukCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("ukForAreaCode1"),
 				TARGETS.get("checkNext3"), TARGETS.get("checkLast4"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("usForAreaCode1"),
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("usForAreaCode1"),
 				TARGETS.get("checkNext3"), TARGETS.get("checkLast4"));
 		// Everything passed for area code 2
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("ukForAreaCode2"),
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("ukForAreaCode2"),
 				TARGETS.get("checkNext3"), TARGETS.get("checkLast4"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("usForAreaCode2"),
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("usForAreaCode2"),
 				TARGETS.get("checkNext3"), TARGETS.get("checkLast4"));
 		// Everything passed for area code 3
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("ukForAreaCode3"),
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("ukForAreaCode3"),
 				TARGETS.get("checkNext3"), TARGETS.get("checkLast4"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("usForAreaCode3"),
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("usForAreaCode3"),
 				TARGETS.get("checkNext3"), TARGETS.get("checkLast4"));
 
 		// Missing middle 3 digits for area code 1
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("ukForAreaCode1"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("usForAreaCode1"));
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("ukForAreaCode1"));
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("usForAreaCode1"));
 		// Missing middle 3 digits for area code 2
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("ukForAreaCode2"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("usForAreaCode2"));
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("ukForAreaCode2"));
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("usForAreaCode2"));
 		// Missing middle 3 digits for area code 3
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("ukForAreaCode3"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("usForAreaCode3"));
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("ukForAreaCode3"));
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("usForAreaCode3"));
 
 		// Missing last 4 digits for area code 1
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("ukForAreaCode1"),
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("ukForAreaCode1"),
 				TARGETS.get("checkNext3"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("usForAreaCode1"),
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode1"), TARGETS.get("usForAreaCode1"),
 				TARGETS.get("checkNext3"));
 		// Missing last 4 digits for area code 2
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("ukForAreaCode2"),
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("ukForAreaCode2"),
 				TARGETS.get("checkNext3"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("usForAreaCode2"),
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode2"), TARGETS.get("usForAreaCode2"),
 				TARGETS.get("checkNext3"));
 		// Missing last 4 digits for area code 3
-		createTargetGroup("Everything Passed for UK", TARGETS.get("ukCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("ukForAreaCode3"),
+		createTargetGroup("Everything Passed for UK", testObject, phenotype,  TARGETS.get("ukCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("ukForAreaCode3"),
 				TARGETS.get("checkNext3"));
-		createTargetGroup("Everything Passed for US", TARGETS.get("usCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("usForAreaCode3"),
+		createTargetGroup("Everything Passed for US", testObject, phenotype,  TARGETS.get("usCountryCode"), TARGETS.get("areaCode3"), TARGETS.get("usForAreaCode3"),
 				TARGETS.get("checkNext3"));
 
 		// Country code
-		createTargetGroup("Only UK Country Code", TARGETS.get("ukCountryCode"));
-		createTargetGroup("Only US Country Code", TARGETS.get("usCountryCode"));
-		createTargetGroup("No Country Code", TARGETS.get("noCountryCode"));
+		createTargetGroup("Only UK Country Code", testObject, phenotype,  TARGETS.get("ukCountryCode"));
+		createTargetGroup("Only US Country Code", testObject, phenotype,  TARGETS.get("usCountryCode"));
+		createTargetGroup("No Country Code", testObject, phenotype,  TARGETS.get("noCountryCode"));
 	}
 	
 	@Override
@@ -107,7 +107,7 @@ public class PhoneNumberEvaluator extends BaseEvaluator<String> {
 	private void setPhoneNumberForTargetsHit(PhoneNumber phoneNumber) {
 		for (TargetGroup targetGroup : targetGroups) {
 			if (targetGroup.isComplete()) {
-				targetGroup.setValidNumber(phoneNumber);
+				targetGroup.setTestObject(phoneNumber);
 			}
 		}
 	}

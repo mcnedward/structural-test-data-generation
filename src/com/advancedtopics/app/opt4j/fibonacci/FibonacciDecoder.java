@@ -6,7 +6,7 @@ import java.util.List;
 import org.opt4j.core.genotype.IntegerGenotype;
 import org.opt4j.core.problem.Decoder;
 
-public class FibonnaciDecoder implements Decoder<IntegerGenotype, List<Long>> {
+public class FibonacciDecoder implements Decoder<IntegerGenotype, List<Long>> {
 
 	@Override
 	public List<Long> decode(IntegerGenotype genotype) {

@@ -18,28 +18,28 @@ public class QuadEvaluator extends BaseEvaluator<List<QuadHolder>> {
 	public List<TargetGroup> evaluate(List<QuadHolder> phenotype) {
 		for (QuadHolder holder : phenotype) {
 			createTargets();
-			QuadraticRoots.findQuadraticRoots(holder);
+			String quadraticRoots = QuadraticRoots.findQuadraticRoots(holder);
 
 			calculateFitness();
-			setTargetGroups();
+			updateResults(quadraticRoots, holder);
 		}
 		return targetGroups;
 	}
 
 	@Override
-	protected void setTargetNames() {
+	protected void setup() {
 		targetNames.add("disriminantLessThan0");
 		targetNames.add("bLessThan0");
 		targetNames.add("other");
 	}
-	
+
 	@Override
-	protected void setTargetGroups() {
-		createTargetGroup("Discriminant Less Than 0", TARGETS.get("disriminantLessThan0"));
-		createTargetGroup("b Less than 0", TARGETS.get("bLessThan0"));
-		createTargetGroup("Other", TARGETS.get("other"));
+	protected void updateResults(Object testObject, Object phenotype) {
+		createTargetGroup("Discriminant Less Than 0", testObject, phenotype, TARGETS.get("disriminantLessThan0"));
+		createTargetGroup("b Less than 0", testObject, phenotype, TARGETS.get("bLessThan0"));
+		createTargetGroup("Other", testObject, phenotype, TARGETS.get("other"));
 	}
-	
+
 	@Override
 	public Map<String, Target> getTargets() {
 		return TARGETS;

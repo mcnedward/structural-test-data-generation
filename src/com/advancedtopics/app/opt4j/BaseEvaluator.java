@@ -22,9 +22,9 @@ public abstract class BaseEvaluator<T> {
 
 	protected abstract List<TargetGroup> evaluate(T phenotype);
 
-	protected abstract void setTargetNames();
+	protected abstract void setup();
 	
-	protected abstract void setTargetGroups();
+	protected abstract void updateResults(Object testObject, Object phenotype);
 	
 	public abstract Map<String, Target> getTargets();
 
@@ -36,7 +36,7 @@ public abstract class BaseEvaluator<T> {
 		targetGroups = new ArrayList<>();
 		targetNames = new ArrayList<>();
 
-		setTargetNames();
+		setup();
 
 		for (String targetName : targetNames) {
 			Target target = new Target(targetName);
@@ -52,10 +52,13 @@ public abstract class BaseEvaluator<T> {
 	 * @param targets
 	 *            All of the Targets that are required to be reached in order for this TargetGroup to be complete.
 	 */
-	protected void createTargetGroup(String targetGroupName, Target... targets) {
+	protected void createTargetGroup(String targetGroupName, Object testObject, Object phenotype, Target... targets) {
 		TargetGroup targetGroup = new TargetGroup(targetGroupName);
-		for (Target target : targets)
+		for (Target target : targets) {
 			targetGroup.addTarget(target);
+			targetGroup.setTestObject(testObject);
+			targetGroup.setInput(phenotype);
+		}
 		targetGroups.add(targetGroup);
 	}
 
@@ -73,5 +76,14 @@ public abstract class BaseEvaluator<T> {
 			double fitness = approachLevel + normalisedBranchDistance;
 			target.setFitness(fitness);
 		}
+	}
+	
+	public void printFitness() {
+		System.out.println("***** Fitness Begin *****");
+		for (String targetName : targetNames) {
+			Target target = getTargets().get(targetName);
+			System.out.println(target.toString() + " - Fitness: " + target.getFitness());
+		}
+		System.out.println("***** Fitness End *****");
 	}
 }

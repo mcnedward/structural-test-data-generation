@@ -21,7 +21,8 @@ public class TargetGroup {
 	private String targetGroupName;
 	private List<Target> targetsRequired;
 	private boolean complete = false;
-	private PhoneNumber validNumber;
+	private Object testObject;
+	private Object input;
 
 	public TargetGroup(String targetGroupName) {
 		targetsRequired = new ArrayList<Target>();
@@ -70,27 +71,40 @@ public class TargetGroup {
 	}
 
 	/**
-	 * @return the validNumber
+	 * @return the testObject
 	 */
-	public PhoneNumber getValidNumber() {
-		return validNumber;
+	public Object getTestObject() {
+		return testObject;
 	}
 
 	/**
-	 * @param validNumber
-	 *            the validNumber to set
+	 * @param testObject
+	 *            the testObject to set
 	 */
-	public void setValidNumber(PhoneNumber validNumber) {
-		this.validNumber = validNumber;
+	public void setTestObject(Object testObject) {
+		this.testObject = testObject;
+	}
+
+	/**
+	 * @return the input
+	 */
+	public Object getInput() {
+		return input;
+	}
+
+	/**
+	 * @param input the input to set
+	 */
+	public void setInput(Object input) {
+		this.input = input;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Target Group for " + targetGroupName + " [" + targetsRequired.size() + "] Complete? " + isComplete());
-		if (isComplete()) {
-			builder.append("\n" + validNumber);
-		}
+		builder.append("\nInput: " + input);
+		builder.append("\nResult: " + testObject);
 		for (Target target : targetsRequired)
 			builder.append("\n" + target + " Hit? " + target.isTargetHit());
 		return builder.toString();

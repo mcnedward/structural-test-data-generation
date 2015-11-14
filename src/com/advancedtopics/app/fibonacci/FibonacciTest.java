@@ -1,34 +1,35 @@
 package com.advancedtopics.app.fibonacci;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.advancedtopics.app.TargetGroup;
 import com.advancedtopics.app.opt4j.BaseTest;
+import com.advancedtopics.app.opt4j.fibonacci.FibonacciDecoder;
+import com.advancedtopics.app.opt4j.fibonacci.FibonacciEvaluator;
 import com.advancedtopics.app.opt4j.fibonacci.FibonaciCreator;
-import com.advancedtopics.app.opt4j.fibonacci.FibonnaciDecoder;
-import com.advancedtopics.app.opt4j.fibonacci.FibonnaciEvaluator;
 
 /**
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 13, 2015
  *
  */
-public class FibonnaciTest extends BaseTest {
+public class FibonacciTest extends BaseTest {
+
+	private List<TargetGroup> targetGroups;
 
 	@Override
 	public void evaluate() {
-		System.out.println("******************** Test for Fibonnaci Sequence ********************");
-		
+		System.out.println("******************** Test for Fibonacci Sequence ********************");
+		targetGroups = new ArrayList<>();
 		for (int x = 0; x < 100; x++) {
 			FibonaciCreator creator = new FibonaciCreator(100);
-			FibonnaciDecoder decoder = new FibonnaciDecoder();
-			FibonnaciEvaluator evaluator = new FibonnaciEvaluator();
+			FibonacciDecoder decoder = new FibonacciDecoder();
+			FibonacciEvaluator evaluator = new FibonacciEvaluator();
 
 			List<TargetGroup> evaluatedGroups = evaluator.evaluate(decoder.decode(creator.create()));
+			targetGroups.addAll(evaluatedGroups);
 			addTargetGroups(evaluatedGroups);
 			finishedIteration++;
-			if (checkForCompleteTargets()) {
-				break;
-			}
 		}
 		// printTargetGroups();
 		if (!checkForCompleteTargets()) {
@@ -37,6 +38,7 @@ public class FibonnaciTest extends BaseTest {
 			evaluate();
 		} else {
 			System.out.println("All targets hit within " + finishedIteration + " iterations.\n********************");
+			findFitness(targetGroups);
 			System.out.println("********************");
 		}
 	}

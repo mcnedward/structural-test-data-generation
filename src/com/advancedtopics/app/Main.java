@@ -1,6 +1,6 @@
 package com.advancedtopics.app;
 
-import com.advancedtopics.app.fibonacci.FibonnaciTest;
+import com.advancedtopics.app.fibonacci.FibonacciTest;
 import com.advancedtopics.app.phonenumber.PhoneNumberTest;
 import com.advancedtopics.app.quadratic.QuadTest;
 
@@ -16,9 +16,9 @@ public class Main {
 		quadTest.printTargetGroups();
 		System.out.println("\n");
 
-		FibonnaciTest fibonnaciTest = new FibonnaciTest();
-		fibonnaciTest.evaluate();
-		fibonnaciTest.printTargetGroups();
+		FibonacciTest fibonacciTest = new FibonacciTest();
+		fibonacciTest.evaluate();
+		fibonacciTest.printTargetGroups();
 		System.out.println("\n");
 
 		PhoneNumberTest phoneNumberTest = new PhoneNumberTest();
