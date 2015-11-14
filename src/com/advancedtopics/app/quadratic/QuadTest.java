@@ -1,29 +1,41 @@
 package com.advancedtopics.app.quadratic;
 
-import org.opt4j.core.Objectives;
+import java.util.List;
 
-import com.advancedtopics.app.quadratic.opt4j.QuadCreator;
-import com.advancedtopics.app.quadratic.opt4j.QuadDecoder;
-import com.advancedtopics.app.quadratic.opt4j.QuadEvaluator;
+import com.advancedtopics.app.TargetGroup;
+import com.advancedtopics.app.opt4j.BaseTest;
+import com.advancedtopics.app.opt4j.quadratic.QuadCreator;
+import com.advancedtopics.app.opt4j.quadratic.QuadDecoder;
+import com.advancedtopics.app.opt4j.quadratic.QuadEvaluator;
 
-public class QuadTest {
+public class QuadTest extends BaseTest {
 
-	public static void main(String[] args) {
-		evaluateQuadriticEquations();
-	}
-
-	private static void evaluateQuadriticEquations() {
-		StringBuilder builder = new StringBuilder();
+	@Override
+	public void evaluate() {
+		System.out.println("******************** Test for Quadratic Equations ********************");
+		
 		for (int x = 0; x < 100; x++) {
 			QuadCreator creator = new QuadCreator(100);
 			QuadDecoder decoder = new QuadDecoder();
 			QuadEvaluator evaluator = new QuadEvaluator();
 
-			Objectives objectives = evaluator.evaluate(decoder.decode(creator.create()));
-			System.out.println(objectives.toString());
-			builder.append("\n" + objectives.toString());
+			List<TargetGroup> evaluatedGroups = evaluator.evaluate(decoder.decode(creator.create()));
+			addTargetGroups(evaluatedGroups);
+			finishedIteration++;
+			if (checkForCompleteTargets()) {
+				break;
+			}
 		}
-		System.out.println(builder.toString());
+		// printTargetGroups();
+		if (!checkForCompleteTargets()) {
+			System.out.println("All targets where not hit within " + finishedIteration + "...");
+			System.out.println("Running again.");
+			evaluate();
+		} else {
+			System.out.println("All targets hit within " + finishedIteration + " iterations.");
+			System.out.println("********************");
+		}
+		
 	}
 
 }

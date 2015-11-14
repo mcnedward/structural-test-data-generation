@@ -1,33 +1,44 @@
 package com.advancedtopics.app.fibonacci;
 
-import org.opt4j.core.Objectives;
+import java.util.List;
 
-import com.advancedtopics.app.fibonacci.opt4j.FibonaciCreator;
-import com.advancedtopics.app.fibonacci.opt4j.FibonnaciDecoder;
-import com.advancedtopics.app.fibonacci.opt4j.FibonnaciEvaluator;
+import com.advancedtopics.app.TargetGroup;
+import com.advancedtopics.app.opt4j.BaseTest;
+import com.advancedtopics.app.opt4j.fibonacci.FibonaciCreator;
+import com.advancedtopics.app.opt4j.fibonacci.FibonnaciDecoder;
+import com.advancedtopics.app.opt4j.fibonacci.FibonnaciEvaluator;
 
 /**
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 13, 2015
  *
  */
-public class FibonnaciTest {
+public class FibonnaciTest extends BaseTest {
 
-	public static void main(String[] args) {
-		evaluateFibonnaci();
-	}
-	
-	private static void evaluateFibonnaci() {
-		StringBuilder builder = new StringBuilder();
+	@Override
+	public void evaluate() {
+		System.out.println("******************** Test for Fibonnaci Sequence ********************");
+		
 		for (int x = 0; x < 100; x++) {
 			FibonaciCreator creator = new FibonaciCreator(100);
 			FibonnaciDecoder decoder = new FibonnaciDecoder();
 			FibonnaciEvaluator evaluator = new FibonnaciEvaluator();
 
-			Objectives objectives = evaluator.evaluate(decoder.decode(creator.create()));
-			System.out.println(objectives.toString());
-			builder.append("\n" + objectives.toString());
+			List<TargetGroup> evaluatedGroups = evaluator.evaluate(decoder.decode(creator.create()));
+			addTargetGroups(evaluatedGroups);
+			finishedIteration++;
+			if (checkForCompleteTargets()) {
+				break;
+			}
 		}
-		System.out.println(builder.toString());
+		// printTargetGroups();
+		if (!checkForCompleteTargets()) {
+			System.out.println("All targets where not hit within " + finishedIteration + "...");
+			System.out.println("Running again.");
+			evaluate();
+		} else {
+			System.out.println("All targets hit within " + finishedIteration + " iterations.\n********************");
+			System.out.println("********************");
+		}
 	}
-	
+
 }

@@ -1,6 +1,13 @@
 package com.advancedtopics.app;
 
 /**
+ * A Condition is a representation of a boolean value.
+ * <p>
+ * This consists of the type of condition (e.g true or false, number comparison...), the operator type (e.g. greater
+ * than, less than, equal to...), the first and second values to compare, a percentage that is used to determine the
+ * chances of the condition passing, and a boolean to tell if the condition has passed.
+ * </p>
+ * 
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 11, 2015
  *
  */
@@ -35,7 +42,7 @@ public class Condition implements ICondition {
 		this.b = b;
 		this.passed = passed;
 	}
-	
+
 	public Condition(int percentage, boolean passed) {
 		this();
 		this.percentage = percentage;
@@ -87,6 +94,16 @@ public class Condition implements ICondition {
 		return 0;
 	}
 
+	/**
+	 * Calculate the branch distance for a condition.
+	 * <p>
+	 * 
+	 * @return The branch distance.
+	 * @see Source: <a href=
+	 *      "http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=732680&url=http%3A%2F%2Fieeexplore.ieee.org%2Fstamp%2Fstamp.jsp%3Ftp%26arnumber%3D732680">
+	 *      An automated framework for structural test-data generation</a>
+	 * 
+	 */
 	private double calculateNumeric() {
 		if (operator == Operator.GREATER_THAN) {
 			if ((b - a) < 0)
@@ -132,7 +149,8 @@ public class Condition implements ICondition {
 	 * condition being true, for example if comparing an enum with 3 values, the odds of the desired enum being hit are
 	 * 33%.
 	 * 
-	 * @param percentage The odds of the condition being true.
+	 * @param percentage
+	 *            The odds of the condition being true.
 	 * @return The branch distance for this condition.
 	 */
 	private double calculateTrueFalse() {

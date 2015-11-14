@@ -1,4 +1,4 @@
-package com.advancedtopics.app.phonenumber.opt4j;
+package com.advancedtopics.app.opt4j.phonenumber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,18 +6,15 @@ import java.util.Random;
 
 import org.opt4j.core.genotype.IntegerMapGenotype;
 import org.opt4j.core.problem.Creator;
-import org.opt4j.core.start.Constant;
 
 import com.google.inject.Inject;
 
 public class PhoneNumberCreator implements Creator<IntegerMapGenotype<String>> {
 
 	private Random random;
-	private final int populationSize;
 
 	@Inject
-	public PhoneNumberCreator(@Constant(value = "populationSize") int populationSize) {
-		this.populationSize = populationSize;
+	public PhoneNumberCreator() {
 		random = new Random();
 	}
 

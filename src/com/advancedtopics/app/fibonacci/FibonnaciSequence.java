@@ -2,8 +2,8 @@ package com.advancedtopics.app.fibonacci;
 
 import com.advancedtopics.app.Condition;
 import com.advancedtopics.app.Condition.Operator;
+import com.advancedtopics.app.opt4j.fibonacci.FibonnaciEvaluator;
 import com.advancedtopics.app.JoinedCondition;
-import com.advancedtopics.app.fibonacci.opt4j.FibonnaciEvaluator;
 
 /**
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 13, 2015

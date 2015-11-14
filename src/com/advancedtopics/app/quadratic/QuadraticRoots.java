@@ -3,12 +3,12 @@ package com.advancedtopics.app.quadratic;
 import com.advancedtopics.app.Complex;
 import com.advancedtopics.app.Condition;
 import com.advancedtopics.app.Condition.Operator;
+import com.advancedtopics.app.opt4j.quadratic.QuadEvaluator;
 import com.advancedtopics.app.JoinedCondition;
-import com.advancedtopics.app.quadratic.opt4j.QuadEvaluator;
 
 public class QuadraticRoots {
 
-	public void findQuadraticRoots(QuadHolder holder) {
+	public static void findQuadraticRoots(QuadHolder holder) {
 		double a = holder.getA();
 		double b = holder.getB();
 		double c = holder.getC();

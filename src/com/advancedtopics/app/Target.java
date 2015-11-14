@@ -4,6 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A Target is equal to an If statement in a block of code. The goal is to find the conditions that are necessary to
+ * reach this Target.
+ * <p>
+ * A Target contains a list of {@link ICondition}s, which can be either {@link Condition} or {@link JoinedCondition},
+ * that determine the conditions needed for this Target to be reached, a boolean telling if the target has been hit, the
+ * approach distance to this target, and the fitness value for this target.
+ * </p>
+ * <p>
+ * The approach distance is the number of unpenetrated nested levels that surround this target.
+ * </p>
+ * 
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 10, 2015
  *
  */
@@ -39,6 +50,11 @@ public class Target {
 		this.approachDistance = approachDistance;
 	}
 
+	/**
+	 * Find the branch distance for all of the conditions needed for this Target to be reached.
+	 * 
+	 * @return The branch distance
+	 */
 	public double getBranchDistance() {
 		double branchDistance = 0;
 
@@ -53,7 +69,7 @@ public class Target {
 		conditions = new ArrayList<ICondition>();
 		targetHit = false;
 	}
-	
+
 	public List<ICondition> getConditions() {
 		return conditions;
 	}

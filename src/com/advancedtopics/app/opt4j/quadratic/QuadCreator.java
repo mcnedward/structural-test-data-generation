@@ -1,20 +1,16 @@
-package com.advancedtopics.app.quadratic.opt4j;
+package com.advancedtopics.app.opt4j.quadratic;
 
 import java.util.Random;
 
 import org.opt4j.core.genotype.IntegerGenotype;
 import org.opt4j.core.problem.Creator;
-import org.opt4j.core.start.Constant;
-
-import com.google.inject.Inject;
 
 public class QuadCreator implements Creator<IntegerGenotype> {
 
 	private Random random;
-	private final int populationSize;
-
-	@Inject
-	public QuadCreator(@Constant(value = "populationSize") int populationSize) {
+	private int populationSize;
+	
+	public QuadCreator(int populationSize) {
 		this.populationSize = populationSize;
 		random = new Random();
 	}

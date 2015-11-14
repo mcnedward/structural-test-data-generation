@@ -1,4 +1,4 @@
-package com.advancedtopics.app.fibonacci.opt4j;
+package com.advancedtopics.app.opt4j.fibonacci;
 
 import java.util.ArrayList;
 import java.util.List;

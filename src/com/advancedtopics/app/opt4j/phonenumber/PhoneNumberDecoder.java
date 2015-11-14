@@ -1,4 +1,4 @@
-package com.advancedtopics.app.phonenumber.opt4j;
+package com.advancedtopics.app.opt4j.phonenumber;
 
 import java.util.Random;
 
@@ -27,6 +27,12 @@ public class PhoneNumberDecoder implements Decoder<IntegerMapGenotype<String>, S
 		return fullNumber;
 	}
 
+	/**
+	 * Set the country code. A random number between 1 and 3 is generated, and that is used to determine which country
+	 * this phone number will be for, or if the number is 3, then no country code will be set.
+	 * 
+	 * @return The country code as a string.
+	 */
 	private String getCountryCode() {
 		String countryCode = "";
 

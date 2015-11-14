@@ -1,4 +1,4 @@
-package com.advancedtopics.app.quadratic.opt4j;
+package com.advancedtopics.app.opt4j.quadratic;
 
 import java.util.ArrayList;
 import java.util.List;

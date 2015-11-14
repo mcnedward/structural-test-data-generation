@@ -1,6 +1,9 @@
 package com.advancedtopics.app;
 
 /**
+ * A JoinedCondition is a boolean representation of the comparison between two different conditions. These conditions
+ * can be of type JoinedCondition or {@link Condition}.
+ * 
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 11, 2015
  *
  */

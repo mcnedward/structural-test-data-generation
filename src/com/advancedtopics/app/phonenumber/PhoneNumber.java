@@ -5,10 +5,13 @@ import com.advancedtopics.app.phonenumber.PhoneNumberChecker.UkAreaCode;
 import com.advancedtopics.app.phonenumber.PhoneNumberChecker.UsAreaCode;
 
 /**
+ * A PhoneNumber contains a country code, either in the UK or the US, an area code (within the specified country), a
+ * boolean determining if the number is valid, and, if the number is not valid, a reason for the invalid status.
+ * 
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 13, 2015
  *
  */
-public class ValidNumber {
+public class PhoneNumber {
 	private String phoneNumber;
 	private Country country;
 	private UkAreaCode ukAreaCode;
@@ -16,7 +19,7 @@ public class ValidNumber {
 	private boolean valid;
 	private String invalidReason;
 
-	public ValidNumber(String phoneNumber) {
+	public PhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -94,7 +97,7 @@ public class ValidNumber {
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
-	
+
 	/**
 	 * @return the invalidReason
 	 */
@@ -103,7 +106,8 @@ public class ValidNumber {
 	}
 
 	/**
-	 * @param invalidReason the invalidReason to set
+	 * @param invalidReason
+	 *            the invalidReason to set
 	 */
 	public void setInvalidReason(String invalidReason) {
 		this.invalidReason = invalidReason;
