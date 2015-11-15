@@ -3,7 +3,7 @@ package com.advancedtopics.app;
 /**
  * A Condition is a representation of a boolean value.
  * <p>
- * This consists of the type of condition (e.g true or false, number comparison...), the operator type (e.g. greater
+ * This consists of the type of condition (e.g. true or false, number comparison...), the operator type (e.g. greater
  * than, less than, equal to...), the first and second values to compare, a percentage that is used to determine the
  * chances of the condition passing, and a boolean to tell if the condition has passed.
  * </p>

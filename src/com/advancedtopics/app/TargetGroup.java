@@ -51,6 +51,13 @@ public class TargetGroup {
 		}
 		return targetFailed;
 	}
+	
+	public double getFitness() {
+		double fitness = 0;
+		for (Target group : targetsRequired)
+			fitness += group.getFitness();
+		return fitness;
+	}
 
 	public void setComplete(boolean complete) {
 		this.complete = complete;
@@ -106,7 +113,7 @@ public class TargetGroup {
 		builder.append("\nInput: " + input);
 		builder.append("\nResult: " + testObject);
 		for (Target target : targetsRequired)
-			builder.append("\n" + target + " Hit? " + target.isTargetHit());
+			builder.append("\n***\n" + target + "\n***");
 		return builder.toString();
 	}
 }

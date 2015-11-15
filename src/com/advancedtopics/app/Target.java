@@ -140,6 +140,6 @@ public class Target {
 
 	@Override
 	public String toString() {
-		return "Target: " + targetName;
+		return "Target: " + targetName + " - Hit? " + targetHit + "\nFitness: " + fitness;
 	}
 }

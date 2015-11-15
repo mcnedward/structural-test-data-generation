@@ -1,8 +1,8 @@
 package com.advancedtopics.app.phonenumber;
 
-import com.advancedtopics.app.phonenumber.PhoneNumberChecker.Country;
-import com.advancedtopics.app.phonenumber.PhoneNumberChecker.UkAreaCode;
-import com.advancedtopics.app.phonenumber.PhoneNumberChecker.UsAreaCode;
+import com.advancedtopics.app.phonenumber.PhoneNumberValidation.Country;
+import com.advancedtopics.app.phonenumber.PhoneNumberValidation.UkAreaCode;
+import com.advancedtopics.app.phonenumber.PhoneNumberValidation.UsAreaCode;
 
 /**
  * A PhoneNumber contains a country code, either in the UK or the US, an area code (within the specified country), a

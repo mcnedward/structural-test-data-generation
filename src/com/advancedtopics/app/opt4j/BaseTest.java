@@ -15,9 +15,29 @@ import com.advancedtopics.app.TargetGroup;
 public abstract class BaseTest {
 
 	protected List<TargetGroup> targetGroups;
+	protected List<TargetGroup> fitnessTargetGroups;
 	protected int finishedIteration = 0;
 
-	protected abstract void evaluate();
+	public void evaluate(String programName) {
+		System.out.println("******************** Test for " + programName + " ********************");
+		fitnessTargetGroups = new ArrayList<>();
+		for (int x = 0; x < 100; x++) {
+			List<TargetGroup> evaluatedGroups = evaluate();
+
+			TargetGroup fitnessGroup = findFitnessGroup(evaluatedGroups);
+			if (fitnessGroup != null)
+				System.out.println("Optimal input with fitness of [" + fitnessGroup.getFitness() + "] was found with TargetGroup of: "
+						+ fitnessGroup.getTargetGroupName() + ": " + fitnessGroup.getInput() + "\n*****");
+			addTargetGroups(evaluatedGroups);
+			fitnessTargetGroups.addAll(evaluatedGroups);
+			addTargetGroups(evaluatedGroups);
+			finishedIteration++;
+		}
+		findFitness(fitnessTargetGroups);
+		System.out.println("********************");
+	}
+
+	protected abstract List<TargetGroup> evaluate();
 
 	public void resetTargetGroups() {
 		targetGroups = null;
@@ -57,6 +77,10 @@ public abstract class BaseTest {
 	}
 
 	public void printTargetGroups() {
+		printTargetGroups(targetGroups);
+	}
+
+	public void printTargetGroups(List<TargetGroup> targetGroups) {
 		System.out.println("Number of target groups: [" + targetGroups.size() + "]");
 		for (TargetGroup targetGroup : targetGroups) {
 			System.out.println("**********");
@@ -65,14 +89,80 @@ public abstract class BaseTest {
 		}
 	}
 
+	public void printDistinctCompleteTargets(List<TargetGroup> targetGroups) {
+		List<TargetGroup> distinct = new ArrayList<>();
+		for (TargetGroup group : targetGroups) {
+			if (group.isComplete()) {
+				if (distinct.isEmpty())
+					distinct.add(group);
+				else {
+					boolean skip = false;
+					for (TargetGroup g : distinct) {
+						if (g.getTargetGroupName().equals(group.getTargetGroupName())) {
+							skip = true;
+							break;
+						}
+					}
+					if (!skip)
+						distinct.add(group);
+				}
+			}
+		}
+		System.out.println("DISTINCT");
+		for (TargetGroup group : distinct) {
+			if (group.isComplete()) {
+				System.out.println("**********");
+				System.out.println(group);
+				System.out.println("**********");
+			}
+		}
+	}
+
+	public void printDistinctIncompleteTargets(List<TargetGroup> targetGroups) {
+		List<TargetGroup> distinct = new ArrayList<>();
+		for (TargetGroup group : targetGroups) {
+			if (!group.isComplete()) {
+				if (distinct.isEmpty())
+					distinct.add(group);
+				else {
+					boolean skip = false;
+					for (TargetGroup g : distinct) {
+						if (g.getTargetGroupName().equals(group.getTargetGroupName())) {
+							skip = true;
+							break;
+						}
+					}
+					if (!skip)
+						distinct.add(group);
+				}
+			}
+		}
+		System.out.println("DISTINCT");
+		for (TargetGroup group : distinct) {
+			if (!group.isComplete()) {
+				System.out.println("**********");
+				System.out.println(group);
+				System.out.println("**********");
+			}
+		}
+	}
+
 	public void findFitness(List<TargetGroup> targetGroups) {
 		Collections.sort(targetGroups, new TargetGroupComparator());
 		for (TargetGroup group : targetGroups) {
-			System.out.println("*****" + group);
-			for (Target target : group.getTargetsRequired()) {
-				System.out.println("Fitness for - " + target + " [" + target.getFitness() + "]\n*****");
+			System.out.println("*****" + group + "\n*****\n");
+		}
+	}
+
+	protected TargetGroup findFitnessGroup(List<TargetGroup> evaluatedGroup) {
+		TargetGroup fitnessGroup = null;
+		for (TargetGroup group : evaluatedGroup) {
+			if (group.isComplete()) {
+				fitnessGroup = group;
+				break;
 			}
 		}
+		return fitnessGroup;
 	}
 }
 

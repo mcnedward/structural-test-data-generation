@@ -9,7 +9,7 @@ import com.advancedtopics.app.JoinedCondition;
  * @author Edward McNealy <edwardmcn64@gmail.com> - Nov 13, 2015
  *
  */
-public class PhoneNumberChecker {
+public class PhoneNumberValidation {
 
 	protected enum Country {
 		UK, US
